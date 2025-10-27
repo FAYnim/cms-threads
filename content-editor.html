@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor Konten - Threads CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/global.css">
     <style>
         /* Content Editor specific styles */
@@ -49,6 +50,13 @@
             font-size: 0.813rem;
             color: #71717a;
             margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .form-hint i {
+            font-size: 0.9rem;
         }
 
         .preview-section {
@@ -66,6 +74,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .preview-title i {
+            color: #8b5cf6;
         }
 
         .preview-content {
@@ -102,6 +114,13 @@
             color: #8b5cf6;
             border-radius: 6px;
             font-size: 0.813rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .preview-tag i {
+            font-size: 0.7rem;
         }
 
         .toggle-switch {
@@ -183,26 +202,28 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="logo">
-                <div class="logo-icon">📱</div>
+                <div class="logo-icon">
+                    <i class="fa-brands fa-threads"></i>
+                </div>
                 <span>Threads CMS</span>
             </div>
             
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="index.html" class="nav-link">
-                        <span class="nav-icon">📊</span>
+                        <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="content-list.html" class="nav-link">
-                        <span class="nav-icon">📝</span>
+                        <span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>
                         <span>Konten</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="content-editor.html" class="nav-link active">
-                        <span class="nav-icon">✏️</span>
+                        <span class="nav-icon"><i class="fa-solid fa-pen-to-square"></i></span>
                         <span>Buat Konten Baru</span>
                     </a>
                 </li>
@@ -213,10 +234,16 @@
         <main class="main-content" id="mainContent">
             <!-- Header -->
             <header class="header">
-                <button class="hamburger" id="hamburger">☰</button>
+                <button class="hamburger" id="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div class="header-right">
-                    <button class="btn btn-secondary btn-sm">🔔</button>
-                    <button class="btn btn-secondary btn-sm">👤</button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
                 </div>
             </header>
 
@@ -228,14 +255,18 @@
                         <p class="page-subtitle">Buat atau edit konten threads Anda.</p>
                     </div>
                     <div class="editor-actions">
-                        <button class="btn btn-secondary" id="previewBtn">👁️ Preview</button>
+                        <button class="btn btn-secondary" id="previewBtn">
+                            <i class="fa-solid fa-eye"></i> Preview
+                        </button>
                     </div>
                 </div>
 
                 <div class="form-container">
                     <form id="contentForm">
                         <div class="form-group">
-                            <label class="form-label" for="contentTitle">Judul Konten *</label>
+                            <label class="form-label" for="contentTitle">
+                                <i class="fa-solid fa-heading"></i> Judul Konten *
+                            </label>
                             <input 
                                 type="text" 
                                 id="contentTitle" 
@@ -247,7 +278,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="contentBody">Konten *</label>
+                            <label class="form-label" for="contentBody">
+                                <i class="fa-solid fa-align-left"></i> Konten *
+                            </label>
                             <textarea 
                                 id="contentBody" 
                                 class="form-textarea" 
@@ -255,44 +288,64 @@
                                 required
                                 maxlength="500"></textarea>
                             <div class="char-count" id="bodyCount">0 / 500 karakter</div>
-                            <div class="form-hint">💡 Konten yang baik biasanya antara 150-300 karakter</div>
+                            <div class="form-hint">
+                                <i class="fa-solid fa-lightbulb"></i> Konten yang baik biasanya antara 150-300 karakter
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="contentTags">Tags</label>
+                            <label class="form-label" for="contentTags">
+                                <i class="fa-solid fa-tags"></i> Tags
+                            </label>
                             <input 
                                 type="text" 
                                 id="contentTags" 
                                 class="form-input" 
                                 placeholder="productivity, tips, remote-work (pisahkan dengan koma)">
-                            <div class="form-hint">🏷️ Tambahkan maksimal 5 tags untuk memudahkan pencarian</div>
+                            <div class="form-hint">
+                                <i class="fa-solid fa-hashtag"></i> Tambahkan maksimal 5 tags untuk memudahkan pencarian
+                            </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="form-label" for="contentStatus">Status Publikasi</label>
+                                <label class="form-label" for="contentStatus">
+                                    <i class="fa-solid fa-circle-info"></i> Status Publikasi
+                                </label>
                                 <select id="contentStatus" class="form-input">
-                                    <option value="draft">Draft - Simpan untuk nanti</option>
-                                    <option value="published">Published - Publikasikan sekarang</option>
+                                    <option value="draft">
+                                        <i class="fa-solid fa-clock"></i> Draft - Simpan untuk nanti
+                                    </option>
+                                    <option value="published">
+                                        <i class="fa-solid fa-check"></i> Published - Publikasikan sekarang
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">Opsi Lainnya</label>
+                                <label class="form-label">
+                                    <i class="fa-solid fa-sliders"></i> Opsi Lainnya
+                                </label>
                                 <div class="toggle-group">
                                     <label class="toggle-switch">
                                         <input type="checkbox" id="allowComments" checked>
                                         <span class="toggle-slider"></span>
                                     </label>
-                                    <span>Izinkan komentar</span>
+                                    <span><i class="fa-solid fa-comments"></i> Izinkan komentar</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-actions">
-                            <a href="content-list.html" class="btn btn-secondary">Batal</a>
-                            <button type="button" class="btn btn-secondary" id="saveDraftBtn">💾 Simpan Draft</button>
-                            <button type="submit" class="btn btn-primary">🚀 Publikasikan</button>
+                            <a href="content-list.html" class="btn btn-secondary">
+                                <i class="fa-solid fa-xmark"></i> Batal
+                            </a>
+                            <button type="button" class="btn btn-secondary" id="saveDraftBtn">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan Draft
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-rocket"></i> Publikasikan
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -300,7 +353,7 @@
                 <!-- Preview Section -->
                 <div class="preview-section" id="previewSection" style="display: none;">
                     <div class="preview-title">
-                        👁️ Preview Konten
+                        <i class="fa-solid fa-eye"></i> Preview Konten
                     </div>
                     <div class="preview-content">
                         <div class="preview-post-title" id="previewTitle">Judul akan muncul di sini</div>
@@ -348,10 +401,10 @@
             if (previewSection.style.display === 'none') {
                 updatePreview();
                 previewSection.style.display = 'block';
-                previewBtn.textContent = '✏️ Edit';
+                previewBtn.innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
             } else {
                 previewSection.style.display = 'none';
-                previewBtn.textContent = '👁️ Preview';
+                previewBtn.innerHTML = '<i class="fa-solid fa-eye"></i> Preview';
             }
         });
 
@@ -370,7 +423,7 @@
                 tagArray.forEach(tag => {
                     const tagEl = document.createElement('span');
                     tagEl.className = 'preview-tag';
-                    tagEl.textContent = '#' + tag;
+                    tagEl.innerHTML = '<i class="fa-solid fa-hashtag"></i>' + tag;
                     previewTags.appendChild(tagEl);
                 });
             }

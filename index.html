@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Threads CMS Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/global.css">
     <style>
         /* Dashboard specific styles */
@@ -79,26 +80,28 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="logo">
-                <div class="logo-icon">📱</div>
+                <div class="logo-icon">
+                    <i class="fa-brands fa-threads"></i>
+                </div>
                 <span>Threads CMS</span>
             </div>
             
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="index.html" class="nav-link active">
-                        <span class="nav-icon">📊</span>
+                        <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="content-list.html" class="nav-link">
-                        <span class="nav-icon">📝</span>
+                        <span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>
                         <span>Konten</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="content-editor.html" class="nav-link">
-                        <span class="nav-icon">✏️</span>
+                        <span class="nav-icon"><i class="fa-solid fa-pen-to-square"></i></span>
                         <span>Buat Konten Baru</span>
                     </a>
                 </li>
@@ -109,10 +112,16 @@
         <main class="main-content" id="mainContent">
             <!-- Header -->
             <header class="header">
-                <button class="hamburger" id="hamburger">☰</button>
+                <button class="hamburger" id="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div class="header-right">
-                    <button class="btn btn-secondary btn-sm">🔔</button>
-                    <button class="btn btn-secondary btn-sm">👤</button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
                 </div>
             </header>
 
@@ -125,19 +134,27 @@
                     <div class="stat-card">
                         <div class="stat-header">
                             <span class="stat-title">Konten Dipublikasi</span>
-                            <div class="stat-icon purple">📢</div>
+                            <div class="stat-icon purple">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
                         </div>
                         <div class="stat-value">24</div>
-                        <div class="stat-change">↑ 12% dari bulan lalu</div>
+                        <div class="stat-change">
+                            <i class="fa-solid fa-arrow-up"></i> 12% dari bulan lalu
+                        </div>
                     </div>
 
                     <div class="stat-card">
                         <div class="stat-header">
                             <span class="stat-title">Draft Konten</span>
-                            <div class="stat-icon blue">📄</div>
+                            <div class="stat-icon blue">
+                                <i class="fa-solid fa-file"></i>
+                            </div>
                         </div>
                         <div class="stat-value">8</div>
-                        <div class="stat-change">↓ 3% dari bulan lalu</div>
+                        <div class="stat-change">
+                            <i class="fa-solid fa-arrow-down"></i> 3% dari bulan lalu
+                        </div>
                     </div>
                 </div>
 
@@ -149,9 +166,11 @@
                         <div class="content-info">
                             <div class="content-title">Tips Produktivitas Kerja Remote</div>
                             <div class="content-meta">
-                                <span class="badge badge-published">Published</span>
+                                <span class="badge badge-published">
+                                    <i class="fa-solid fa-check-circle"></i> Published
+                                </span>
                                 <span>•</span>
-                                <span>24 Okt 2025</span>
+                                <span><i class="fa-regular fa-calendar"></i> 24 Okt 2025</span>
                             </div>
                         </div>
                     </div>
@@ -159,9 +178,11 @@
                         <div class="content-info">
                             <div class="content-title">Cara Optimasi SEO di 2025</div>
                             <div class="content-meta">
-                                <span class="badge badge-draft">Draft</span>
+                                <span class="badge badge-draft">
+                                    <i class="fa-solid fa-clock"></i> Draft
+                                </span>
                                 <span>•</span>
-                                <span>23 Okt 2025</span>
+                                <span><i class="fa-regular fa-calendar"></i> 23 Okt 2025</span>
                             </div>
                         </div>
                     </div>
@@ -169,9 +190,11 @@
                         <div class="content-info">
                             <div class="content-title">Membangun Personal Branding</div>
                             <div class="content-meta">
-                                <span class="badge badge-published">Published</span>
+                                <span class="badge badge-published">
+                                    <i class="fa-solid fa-check-circle"></i> Published
+                                </span>
                                 <span>•</span>
-                                <span>22 Okt 2025</span>
+                                <span><i class="fa-regular fa-calendar"></i> 22 Okt 2025</span>
                             </div>
                         </div>
                     </div>
