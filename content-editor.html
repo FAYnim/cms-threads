@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Konten - Threads CMS</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <style>
+        /* Content Editor specific styles */
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .editor-title-group {
+            flex: 1;
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .char-count {
+            font-size: 0.813rem;
+            color: #71717a;
+            margin-top: 0.25rem;
+        }
+
+        .char-count.warning {
+            color: #fbbf24;
+        }
+
+        .char-count.danger {
+            color: #ef4444;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-hint {
+            font-size: 0.813rem;
+            color: #71717a;
+            margin-top: 0.25rem;
+        }
+
+        .preview-section {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .preview-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-content {
+            background: #0a0a0a;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .preview-post-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .preview-post-body {
+            color: #a1a1aa;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preview-tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+            border-radius: 6px;
+            font-size: 0.813rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3f3f46;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #8b5cf6;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .editor-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .editor-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .editor-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📱</div>
+                <span>Threads CMS</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-list.html" class="nav-link">
+                        <span class="nav-icon">📝</span>
+                        <span>Konten</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-editor.html" class="nav-link active">
+                        <span class="nav-icon">✏️</span>
+                        <span>Buat Konten Baru</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <button class="hamburger" id="hamburger">☰</button>
+                <div class="header-right">
+                    <button class="btn btn-secondary btn-sm">🔔</button>
+                    <button class="btn btn-secondary btn-sm">👤</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <div class="editor-header">
+                    <div class="editor-title-group">
+                        <h1 class="page-title">Editor Konten</h1>
+                        <p class="page-subtitle">Buat atau edit konten threads Anda.</p>
+                    </div>
+                    <div class="editor-actions">
+                        <button class="btn btn-secondary" id="previewBtn">👁️ Preview</button>
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <form id="contentForm">
+                        <div class="form-group">
+                            <label class="form-label" for="contentTitle">Judul Konten *</label>
+                            <input 
+                                type="text" 
+                                id="contentTitle" 
+                                class="form-input" 
+                                placeholder="Masukkan judul konten yang menarik..."
+                                required
+                                maxlength="100">
+                            <div class="char-count" id="titleCount">0 / 100 karakter</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="contentBody">Konten *</label>
+                            <textarea 
+                                id="contentBody" 
+                                class="form-textarea" 
+                                placeholder="Tulis konten threads Anda di sini...&#10;&#10;Tips: Buat konten yang engaging dan mudah dibaca!"
+                                required
+                                maxlength="500"></textarea>
+                            <div class="char-count" id="bodyCount">0 / 500 karakter</div>
+                            <div class="form-hint">💡 Konten yang baik biasanya antara 150-300 karakter</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="contentTags">Tags</label>
+                            <input 
+                                type="text" 
+                                id="contentTags" 
+                                class="form-input" 
+                                placeholder="productivity, tips, remote-work (pisahkan dengan koma)">
+                            <div class="form-hint">🏷️ Tambahkan maksimal 5 tags untuk memudahkan pencarian</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="contentStatus">Status Publikasi</label>
+                                <select id="contentStatus" class="form-input">
+                                    <option value="draft">Draft - Simpan untuk nanti</option>
+                                    <option value="published">Published - Publikasikan sekarang</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Opsi Lainnya</label>
+                                <div class="toggle-group">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="allowComments" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Izinkan komentar</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="content-list.html" class="btn btn-secondary">Batal</a>
+                            <button type="button" class="btn btn-secondary" id="saveDraftBtn">💾 Simpan Draft</button>
+                            <button type="submit" class="btn btn-primary">🚀 Publikasikan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <div class="preview-title">
+                        👁️ Preview Konten
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-post-title" id="previewTitle">Judul akan muncul di sini</div>
+                        <div class="preview-post-body" id="previewBody">Konten akan muncul di sini...</div>
+                        <div class="preview-tags" id="previewTags"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script>
+        // Character counter
+        const titleInput = document.getElementById('contentTitle');
+        const bodyInput = document.getElementById('contentBody');
+        const titleCount = document.getElementById('titleCount');
+        const bodyCount = document.getElementById('bodyCount');
+
+        function updateCharCount(input, counter, max) {
+            const length = input.value.length;
+            counter.textContent = `${length} / ${max} karakter`;
+            
+            // Add warning/danger classes
+            counter.classList.remove('warning', 'danger');
+            if (length > max * 0.8) {
+                counter.classList.add('warning');
+            }
+            if (length >= max) {
+                counter.classList.add('danger');
+            }
+        }
+
+        titleInput.addEventListener('input', () => updateCharCount(titleInput, titleCount, 100));
+        bodyInput.addEventListener('input', () => updateCharCount(bodyInput, bodyCount, 500));
+
+        // Preview functionality
+        const previewBtn = document.getElementById('previewBtn');
+        const previewSection = document.getElementById('previewSection');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewBody = document.getElementById('previewBody');
+        const previewTags = document.getElementById('previewTags');
+
+        previewBtn.addEventListener('click', () => {
+            if (previewSection.style.display === 'none') {
+                updatePreview();
+                previewSection.style.display = 'block';
+                previewBtn.textContent = '✏️ Edit';
+            } else {
+                previewSection.style.display = 'none';
+                previewBtn.textContent = '👁️ Preview';
+            }
+        });
+
+        function updatePreview() {
+            const title = titleInput.value || 'Judul akan muncul di sini';
+            const body = bodyInput.value || 'Konten akan muncul di sini...';
+            const tags = document.getElementById('contentTags').value;
+
+            previewTitle.textContent = title;
+            previewBody.textContent = body;
+
+            // Handle tags
+            previewTags.innerHTML = '';
+            if (tags.trim()) {
+                const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+                tagArray.forEach(tag => {
+                    const tagEl = document.createElement('span');
+                    tagEl.className = 'preview-tag';
+                    tagEl.textContent = '#' + tag;
+                    previewTags.appendChild(tagEl);
+                });
+            }
+        }
+
+        // Auto-update preview on input
+        titleInput.addEventListener('input', updatePreview);
+        bodyInput.addEventListener('input', updatePreview);
+        document.getElementById('contentTags').addEventListener('input', updatePreview);
+
+        // Save draft
+        document.getElementById('saveDraftBtn').addEventListener('click', () => {
+            if (!titleInput.value || !bodyInput.value) {
+                alert('Judul dan konten harus diisi!');
+                return;
+            }
+            alert('✅ Draft berhasil disimpan!');
+        });
+
+        // Form submission
+        document.getElementById('contentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = titleInput.value;
+            const body = bodyInput.value;
+            const status = document.getElementById('contentStatus').value;
+
+            if (!title || !body) {
+                alert('❌ Judul dan konten harus diisi!');
+                return;
+            }
+
+            if (status === 'published') {
+                if (confirm('🚀 Publikasikan konten ini sekarang?')) {
+                    alert('✅ Konten berhasil dipublikasikan!');
+                    setTimeout(() => {
+                        window.location.href = 'content-list.html';
+                    }, 1000);
+                }
+            } else {
+                alert('✅ Draft berhasil disimpan!');
+                setTimeout(() => {
+                    window.location.href = 'content-list.html';
+                }, 1000);
+            }
+        });
+
+        // Cancel button
+        document.querySelector('.form-actions .btn-secondary').addEventListener('click', (e) => {
+            if (titleInput.value || bodyInput.value) {
+                if (!confirm('Ada perubahan yang belum disimpan. Yakin ingin keluar?')) {
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

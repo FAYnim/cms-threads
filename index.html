@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threads CMS Dashboard</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <style>
+        /* Dashboard specific styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            color: #a1a1aa;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-icon.purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+        }
+
+        .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.813rem;
+            color: #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📱</div>
+                <span>Threads CMS</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-list.html" class="nav-link">
+                        <span class="nav-icon">📝</span>
+                        <span>Konten</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-editor.html" class="nav-link">
+                        <span class="nav-icon">✏️</span>
+                        <span>Buat Konten Baru</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <button class="hamburger" id="hamburger">☰</button>
+                <div class="header-right">
+                    <button class="btn btn-secondary btn-sm">🔔</button>
+                    <button class="btn btn-secondary btn-sm">👤</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Selamat datang kembali! Berikut ringkasan konten Anda.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Konten Dipublikasi</span>
+                            <div class="stat-icon purple">📢</div>
+                        </div>
+                        <div class="stat-value">24</div>
+                        <div class="stat-change">↑ 12% dari bulan lalu</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Draft Konten</span>
+                            <div class="stat-icon blue">📄</div>
+                        </div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-change">↓ 3% dari bulan lalu</div>
+                    </div>
+                </div>
+
+                <div class="content-list">
+                    <div class="list-header">
+                        <h2 class="list-title">Konten Terbaru</h2>
+                    </div>
+                    <div class="content-item">
+                        <div class="content-info">
+                            <div class="content-title">Tips Produktivitas Kerja Remote</div>
+                            <div class="content-meta">
+                                <span class="badge badge-published">Published</span>
+                                <span>•</span>
+                                <span>24 Okt 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <div class="content-info">
+                            <div class="content-title">Cara Optimasi SEO di 2025</div>
+                            <div class="content-meta">
+                                <span class="badge badge-draft">Draft</span>
+                                <span>•</span>
+                                <span>23 Okt 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <div class="content-info">
+                            <div class="content-title">Membangun Personal Branding</div>
+                            <div class="content-meta">
+                                <span class="badge badge-published">Published</span>
+                                <span>•</span>
+                                <span>22 Okt 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

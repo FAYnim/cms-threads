@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konten - Threads CMS</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <style>
+        /* Content List specific styles */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            color: #a1a1aa;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #8b5cf6;
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: #71717a;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📱</div>
+                <span>Threads CMS</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-list.html" class="nav-link active">
+                        <span class="nav-icon">📝</span>
+                        <span>Konten</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-editor.html" class="nav-link">
+                        <span class="nav-icon">✏️</span>
+                        <span>Buat Konten Baru</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <button class="hamburger" id="hamburger">☰</button>
+                <div class="header-right">
+                    <a href="content-editor.html" class="btn btn-primary btn-sm">+ Buat Konten</a>
+                    <button class="btn btn-secondary btn-sm">🔔</button>
+                    <button class="btn btn-secondary btn-sm">👤</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <h1 class="page-title">Semua Konten</h1>
+                <p class="page-subtitle">Kelola semua konten threads Anda di sini.</p>
+
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">Semua (32)</button>
+                    <button class="filter-btn" data-filter="published">Published (24)</button>
+                    <button class="filter-btn" data-filter="draft">Draft (8)</button>
+                </div>
+
+                <div class="content-list">
+                    <div class="list-header">
+                        <h2 class="list-title">Daftar Konten</h2>
+                        <input type="text" class="search-box" placeholder="Cari konten..." id="searchBox">
+                    </div>
+                    
+                    <div id="contentListContainer">
+                        <div class="content-item" data-status="published">
+                            <div class="content-info">
+                                <div class="content-title">Tips Produktivitas Kerja Remote</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-published">Published</span>
+                                    <span>•</span>
+                                    <span>24 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>1.2k views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="draft">
+                            <div class="content-info">
+                                <div class="content-title">Cara Optimasi SEO di 2025</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-draft">Draft</span>
+                                    <span>•</span>
+                                    <span>23 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>0 views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="published">
+                            <div class="content-info">
+                                <div class="content-title">Membangun Personal Branding</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-published">Published</span>
+                                    <span>•</span>
+                                    <span>22 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>856 views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="published">
+                            <div class="content-info">
+                                <div class="content-title">Tren Design UI 2025</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-published">Published</span>
+                                    <span>•</span>
+                                    <span>20 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>2.1k views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="draft">
+                            <div class="content-info">
+                                <div class="content-title">Framework JavaScript Terbaik</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-draft">Draft</span>
+                                    <span>•</span>
+                                    <span>19 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>0 views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="published">
+                            <div class="content-info">
+                                <div class="content-title">10 Tools Developer Wajib 2025</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-published">Published</span>
+                                    <span>•</span>
+                                    <span>18 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>3.4k views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="draft">
+                            <div class="content-info">
+                                <div class="content-title">Panduan AI untuk Content Creator</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-draft">Draft</span>
+                                    <span>•</span>
+                                    <span>17 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>0 views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="content-item" data-status="published">
+                            <div class="content-info">
+                                <div class="content-title">Strategi Marketing Digital 2025</div>
+                                <div class="content-meta">
+                                    <span class="badge badge-published">Published</span>
+                                    <span>•</span>
+                                    <span>15 Okt 2025</span>
+                                    <span>•</span>
+                                    <span>1.8k views</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <button class="icon-btn edit-btn" title="Edit">✏️</button>
+                                <button class="icon-btn delete delete-btn" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const contentItems = document.querySelectorAll('.content-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+                
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter content
+                contentItems.forEach(item => {
+                    if (filter === 'all') {
+                        item.style.display = 'flex';
+                    } else {
+                        if (item.getAttribute('data-status') === filter) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            contentItems.forEach(item => {
+                const title = item.querySelector('.content-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Delete functionality
+        const deleteBtns = document.querySelectorAll('.delete-btn');
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (confirm('Apakah Anda yakin ingin menghapus konten ini?')) {
+                    const item = e.target.closest('.content-item');
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+                    setTimeout(() => item.remove(), 300);
+                }
+            });
+        });
+
+        // Edit functionality
+        const editBtns = document.querySelectorAll('.edit-btn');
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = 'content-editor.html';
+            });
+        });
+    </script>
+</body>
+</html>
