@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - Threads CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <style>
+        .settings-section {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .section-heading {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-heading i {
+            color: #8b5cf6;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon .form-input {
+            padding-right: 3.5rem; /* More space for the button */
+        }
+
+        .input-icon-btn {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #71717a;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem;
+        }
+
+        .input-icon-btn:hover {
+            color: #a1a1aa;
+        }
+
+        .form-hint {
+            font-size: 0.813rem;
+            color: #71717a;
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <!-- Sidebar Placeholder -->
+        <div id="sidebar-placeholder"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <button class="hamburger" id="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-right">
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <h1 class="page-title">Pengaturan</h1>
+                <p class="page-subtitle">Kelola pengaturan akun dan integrasi Anda.</p>
+
+                <div class="settings-section">
+                    <h2 class="section-heading">
+                        <i class="fa-solid fa-key"></i> Integrasi API
+                    </h2>
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label class="form-label" for="apiKey">API Key</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="apiKey" class="form-input" placeholder="Masukkan API Key Anda...">
+                                <button type="button" class="input-icon-btn" id="toggleApiKey">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="form-hint">
+                                API Key digunakan untuk menghubungkan CMS ini dengan akun Threads Anda.
+                            </div>
+                        </div>
+                        <div class="form-actions" style="justify-content: flex-start;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-save"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/include.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/settings.js"></script>
+</body>
+</html>
