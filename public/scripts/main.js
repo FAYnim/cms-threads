@@ -1,12 +1,12 @@
-// Main JavaScript for Threads CMS Dashboard
-// Handles sidebar toggle and common functionality across all pages
+// JavaScript Utama untuk Dasbor Threads CMS
+// Menangani toggle sidebar dan fungsionalitas umum di semua halaman
 
 document.addEventListener('DOMContentLoaded', () => {
     const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
     const hamburger = document.getElementById('hamburger');
     const overlay = document.getElementById('overlay');
 
-    // This function will be called once the sidebar is loaded
+    // Fungsi ini akan dipanggil setelah sidebar dimuat
     function initializeSidebar() {
         const sidebar = document.getElementById('sidebar');
         if (!sidebar) {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* ======
-        Toggle sidebar visibility
+        Toggle visibilitas sidebar
         ====== */
         function toggleSidebar() {
             sidebar.classList.toggle('active');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* ======
-        Close sidebar
+        Tutup sidebar
         ====== */
         function closeSidebar() {
             sidebar.classList.remove('active');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* ======
-        Handle window resize
+        Tangani perubahan ukuran jendela
         ====== */
         function handleResize() {
             if (window.innerWidth > 768) {
@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Event Listeners
+        // Event Listener
         if (hamburger) hamburger.addEventListener('click', toggleSidebar);
         if (overlay) overlay.addEventListener('click', closeSidebar);
         window.addEventListener('resize', handleResize);
 
-        // Close sidebar when clicking on nav links (mobile)
+        // Tutup sidebar saat mengklik tautan nav (seluler)
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -57,15 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         /* ======
-        Keyboard shortcuts
+        Pintasan keyboard
         ====== */
         document.addEventListener('keydown', (e) => {
-            // ESC to close sidebar
+            // ESC untuk menutup sidebar
             if (e.key === 'Escape' && sidebar.classList.contains('active')) {
                 closeSidebar();
             }
 
-            // Ctrl/Cmd + K to toggle sidebar
+            // Ctrl/Cmd + K untuk toggle sidebar
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
                 toggleSidebar();
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         /* ======
-        Prevent body scroll when sidebar is open on mobile
+        Mencegah scroll body saat sidebar terbuka di seluler
         ====== */
         const bodyScrollObserver = new MutationObserver(() => {
             if (sidebar.classList.contains('active')) {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Use a MutationObserver to detect when the sidebar is added to the DOM
+    // Gunakan MutationObserver untuk mendeteksi kapan sidebar ditambahkan ke DOM
     if (sidebarPlaceholder) {
         const observer = new MutationObserver((mutationsList, obs) => {
             for (const mutation of mutationsList) {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const sidebarEl = document.getElementById('sidebar');
                     if (sidebarEl) {
                         initializeSidebar();
-                        obs.disconnect(); // Stop observing once the sidebar is found
+                        obs.disconnect(); // Berhenti mengamati setelah sidebar ditemukan
                         return;
                     }
                 }
@@ -112,14 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ======
-Smooth scroll to top when navigating
+Gulir mulus ke atas saat navigasi
 ====== */
 window.addEventListener('load', () => {
     window.scrollTo(0, 0);
 });
 
 /* ======
-Toast notification system (optional, can be used for success/error messages)
+Sistem notifikasi toast (opsional, dapat digunakan untuk pesan sukses/error)
 ====== */
 window.showToast = function(message, type = 'success') {
     const toast = document.createElement('div');
@@ -149,7 +149,7 @@ window.showToast = function(message, type = 'success') {
 };
 
 /* ======
-Add CSS animations for toast
+Tambahkan animasi CSS untuk toast
 ====== */
 const style = document.createElement('style');
 style.textContent = `
@@ -186,11 +186,11 @@ style.textContent = `
 document.head.appendChild(style);
 
 /* ======
-Initialize page
+Inisialisasi halaman
 ====== */
 console.log('🚀 Threads CMS Dashboard loaded successfully');
 
-// Add page transition effect
+// Tambahkan efek transisi halaman
 document.body.style.opacity = '0';
 setTimeout(() => {
     document.body.style.transition = 'opacity 0.3s ease';

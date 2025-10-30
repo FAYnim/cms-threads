@@ -1,4 +1,4 @@
-// Character counter
+// Penghitung karakter
 const titleInput = document.getElementById('contentTitle');
 const bodyInput = document.getElementById('contentBody');
 const titleCount = document.getElementById('titleCount');
@@ -8,11 +8,11 @@ function updateCharCount(input, counter, max) {
     const length = input.value.length;
     counter.textContent = `${length} / ${max} karakter`;
     
-    // Add warning/danger classes
+    // Tambahkan kelas warning/danger
     counter.classList.remove('warning', 'danger');
-    if (length > max * 0.9) { // More common to show danger at 90-100%
+    if (length > max * 0.9) { // Lebih umum untuk menampilkan bahaya pada 90-100%
         counter.classList.add('danger');
-    } else if (length > max * 0.75) { // Warning from 75%
+    } else if (length > max * 0.75) { // Peringatan dari 75%
         counter.classList.add('warning');
     }
 }
@@ -22,7 +22,7 @@ if (titleInput && bodyInput) {
     bodyInput.addEventListener('input', () => updateCharCount(bodyInput, bodyCount, 500));
 }
 
-// Preview functionality
+// Fungsionalitas pratinjau
 const previewBtn = document.getElementById('previewBtn');
 const previewSection = document.getElementById('previewSection');
 const previewTitle = document.getElementById('previewTitle');
@@ -40,14 +40,14 @@ function updatePreview() {
     previewTitle.textContent = title;
     previewBody.textContent = body;
 
-    // Handle tags
+    // Tangani tag
     previewTags.innerHTML = '';
     if (tags.trim()) {
         const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
         tagArray.forEach(tag => {
             const tagEl = document.createElement('span');
             tagEl.className = 'preview-tag';
-            tagEl.innerHTML = `<i class="fa-solid fa-hashtag"></i> ${tag}`; // Added space for readability
+            tagEl.innerHTML = `<i class="fa-solid fa-hashtag"></i> ${tag}`; // Menambahkan spasi agar mudah dibaca
             previewTags.appendChild(tagEl);
         });
     }
@@ -67,14 +67,14 @@ if (previewBtn) {
     });
 }
 
-// Auto-update preview on input
+// Perbarui pratinjau otomatis saat ada input
 if (titleInput && bodyInput && contentTagsInput) {
     titleInput.addEventListener('input', updatePreview);
     bodyInput.addEventListener('input', updatePreview);
     contentTagsInput.addEventListener('input', updatePreview);
 }
 
-// Save draft
+// Simpan draft
 const saveDraftBtn = document.getElementById('saveDraftBtn');
 if (saveDraftBtn) {
     saveDraftBtn.addEventListener('click', () => {
@@ -86,7 +86,7 @@ if (saveDraftBtn) {
     });
 }
 
-// Form submission
+// Pengiriman form
 const contentForm = document.getElementById('contentForm');
 if (contentForm) {
     contentForm.addEventListener('submit', (e) => {
@@ -117,7 +117,7 @@ if (contentForm) {
     });
 }
 
-// Cancel button confirmation
+// Konfirmasi tombol batal
 const cancelButton = document.querySelector('.form-actions a.btn-secondary');
 if (cancelButton) {
     cancelButton.addEventListener('click', (e) => {
@@ -129,7 +129,7 @@ if (cancelButton) {
     });
 }
 
-// Editor mode switcher
+// Pengalih mode editor
 const standardEditorCard = document.getElementById('standardEditorCard');
 const remakeEditorCard = document.getElementById('remakeEditorCard');
 const remakeContentForm = document.getElementById('remakeContentForm');
@@ -141,7 +141,7 @@ if (standardEditorCard && remakeEditorCard && contentForm && remakeContentForm) 
 
         contentForm.style.display = 'block';
         remakeContentForm.style.display = 'none';
-        if (previewBtn) previewBtn.style.display = 'inline-flex'; // Show preview button
+        if (previewBtn) previewBtn.style.display = 'inline-flex'; // Tampilkan tombol pratinjau
     });
 
     remakeEditorCard.addEventListener('click', () => {
@@ -150,7 +150,7 @@ if (standardEditorCard && remakeEditorCard && contentForm && remakeContentForm) 
 
         remakeContentForm.style.display = 'block';
         contentForm.style.display = 'none';
-        if (previewBtn) previewBtn.style.display = 'none'; // Hide preview button
+        if (previewBtn) previewBtn.style.display = 'none'; // Sembunyikan tombol pratinjau
         if (previewSection.style.display !== 'none') {
             previewSection.style.display = 'none';
         }

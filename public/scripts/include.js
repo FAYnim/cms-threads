@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 sidebarPlaceholder.innerHTML = data;
-                // After sidebar is loaded, set the active navigation link
+                // Setelah sidebar dimuat, atur tautan navigasi yang aktif
                 setActiveNav();
             })
             .catch(error => {
