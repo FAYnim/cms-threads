@@ -17,6 +17,40 @@
             gap: 1rem;
         }
 
+        .sub-content-editor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .editor-choice-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .editor-choice-card:hover {
+            border-color: #3f3f46;
+            background: #1f1f23;
+        }
+
+        .editor-choice-card.active {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .editor-choice-card i { color: #8b5cf6; font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .editor-choice-card h3 { font-size: 1.125rem; font-weight: 600; color: #fff; }
+        .editor-choice-card p { font-size: 0.875rem; color: #a1a1aa; line-height: 1.5; }
+
+
         .editor-title-group {
             flex: 1;
         }
@@ -189,6 +223,10 @@
                 flex-direction: column;
             }
 
+            .sub-content-editor {
+                grid-template-columns: 1fr;
+            }
+
             .editor-actions .btn {
                 width: 100%;
             }
@@ -230,6 +268,20 @@
                         <button class="btn btn-secondary" id="previewBtn">
                             <i class="fa-solid fa-eye"></i> Preview
                         </button>
+                    </div>
+                </div>
+
+                <!-- Sub content editor menu -->
+                <div class="sub-content-editor">
+                    <div class="editor-choice-card active" id="standardEditorCard">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                        <h3>Editor Standar</h3>
+                        <p>Tulis konten baru dari awal menggunakan editor.</p>
+                    </div>
+                    <div class="editor-choice-card" id="remakeEditorCard">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <h3>Remake Konten (AI)</h3>
+                        <p>Buat ulang konten lama menjadi versi baru dengan bantuan AI.</p>
                     </div>
                 </div>
 
@@ -320,6 +372,63 @@
                             </button>
                         </div>
                     </form>
+
+                    <form id="remakeContentForm" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label" for="remakeSource">
+                                <i class="fa-solid fa-file-import"></i> Sumber Konten (Topik/Transkrip/Teks)
+                            </label>
+                            <textarea 
+                                id="remakeSource" 
+                                class="form-textarea" 
+                                placeholder="Masukkan teks mentah yang ingin di-remake menjadi thread. Contoh: transkrip video, artikel blog, atau poin-poin ide."
+                                style="min-height: 200px;"></textarea>
+                            <div class="form-hint">
+                                <i class="fa-solid fa-lightbulb"></i> Semakin detail sumbernya, semakin baik hasilnya.
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="remakeStyle">
+                                    <i class="fa-solid fa-palette"></i> Gaya Konten
+                                </label>
+                                <select id="remakeStyle" class="form-input">
+                                    <option value="edukasi">Edukasi</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="sindiran">Sindiran / Satire</option>
+                                    <option value="kontroversi">Kontroversi</option>
+                                    <option value="opini">Opini</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="remakeCount">
+                                    <i class="fa-solid fa-list-ol"></i> Jumlah Sub-Konten
+                                </label>
+                                <input 
+                                    type="number" 
+                                    id="remakeCount" 
+                                    class="form-input" 
+                                    value="3"
+                                    min="1"
+                                    max="10">
+                                <div class="form-hint">
+                                    Jumlah post terpisah dalam satu thread (1-10).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="remakeResult">
+                                <i class="fa-solid fa-robot"></i> Hasil Generate (AI)
+                            </label>
+                            <textarea id="remakeResult" class="form-textarea" readonly placeholder="Hasil remake konten akan muncul di sini setelah di-generate..." style="min-height: 250px; background-color: #0a0a0a;"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Konten</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Preview Section -->
@@ -339,119 +448,6 @@
 
     <script src="scripts/include.js"></script>
     <script src="scripts/main.js"></script>
-    <script>
-        // Character counter
-        const titleInput = document.getElementById('contentTitle');
-        const bodyInput = document.getElementById('contentBody');
-        const titleCount = document.getElementById('titleCount');
-        const bodyCount = document.getElementById('bodyCount');
-
-        function updateCharCount(input, counter, max) {
-            const length = input.value.length;
-            counter.textContent = `${length} / ${max} karakter`;
-            
-            // Add warning/danger classes
-            counter.classList.remove('warning', 'danger');
-            if (length > max * 0.8) {
-                counter.classList.add('warning');
-            }
-            if (length >= max) {
-                counter.classList.add('danger');
-            }
-        }
-
-        titleInput.addEventListener('input', () => updateCharCount(titleInput, titleCount, 100));
-        bodyInput.addEventListener('input', () => updateCharCount(bodyInput, bodyCount, 500));
-
-        // Preview functionality
-        const previewBtn = document.getElementById('previewBtn');
-        const previewSection = document.getElementById('previewSection');
-        const previewTitle = document.getElementById('previewTitle');
-        const previewBody = document.getElementById('previewBody');
-        const previewTags = document.getElementById('previewTags');
-
-        previewBtn.addEventListener('click', () => {
-            if (previewSection.style.display === 'none') {
-                updatePreview();
-                previewSection.style.display = 'block';
-                previewBtn.innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
-            } else {
-                previewSection.style.display = 'none';
-                previewBtn.innerHTML = '<i class="fa-solid fa-eye"></i> Preview';
-            }
-        });
-
-        function updatePreview() {
-            const title = titleInput.value || 'Judul akan muncul di sini';
-            const body = bodyInput.value || 'Konten akan muncul di sini...';
-            const tags = document.getElementById('contentTags').value;
-
-            previewTitle.textContent = title;
-            previewBody.textContent = body;
-
-            // Handle tags
-            previewTags.innerHTML = '';
-            if (tags.trim()) {
-                const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-                tagArray.forEach(tag => {
-                    const tagEl = document.createElement('span');
-                    tagEl.className = 'preview-tag';
-                    tagEl.innerHTML = '<i class="fa-solid fa-hashtag"></i>' + tag;
-                    previewTags.appendChild(tagEl);
-                });
-            }
-        }
-
-        // Auto-update preview on input
-        titleInput.addEventListener('input', updatePreview);
-        bodyInput.addEventListener('input', updatePreview);
-        document.getElementById('contentTags').addEventListener('input', updatePreview);
-
-        // Save draft
-        document.getElementById('saveDraftBtn').addEventListener('click', () => {
-            if (!titleInput.value || !bodyInput.value) {
-                alert('Judul dan konten harus diisi!');
-                return;
-            }
-            alert('✅ Draft berhasil disimpan!');
-        });
-
-        // Form submission
-        document.getElementById('contentForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const title = titleInput.value;
-            const body = bodyInput.value;
-            const status = document.getElementById('contentStatus').value;
-
-            if (!title || !body) {
-                alert('❌ Judul dan konten harus diisi!');
-                return;
-            }
-
-            if (status === 'published') {
-                if (confirm('🚀 Publikasikan konten ini sekarang?')) {
-                    alert('✅ Konten berhasil dipublikasikan!');
-                    setTimeout(() => {
-                        window.location.href = 'content-list.html';
-                    }, 1000);
-                }
-            } else {
-                alert('✅ Draft berhasil disimpan!');
-                setTimeout(() => {
-                    window.location.href = 'content-list.html';
-                }, 1000);
-            }
-        });
-
-        // Cancel button
-        document.querySelector('.form-actions .btn-secondary').addEventListener('click', (e) => {
-            if (titleInput.value || bodyInput.value) {
-                if (!confirm('Ada perubahan yang belum disimpan. Yakin ingin keluar?')) {
-                    e.preventDefault();
-                }
-            }
-        });
-    </script>
+    <script src="scripts/content-editor.js"></script>
 </body>
 </html>
