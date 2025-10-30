@@ -66,25 +66,6 @@
     });
 
     /**
-     * Add active class to current page in navigation
-     */
-    function setActiveNav() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-
-    // Set active navigation on page load
-    setActiveNav();
-
-    /**
      * Toast notification system (optional, can be used for success/error messages)
      */
     window.showToast = function(message, type = 'success') {
